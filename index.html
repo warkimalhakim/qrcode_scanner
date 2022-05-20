@@ -26,7 +26,7 @@
                 
                 <!-- Video Options -->
                 <div class="video-options">
-                    <select name="" id="" class="custom-select">
+                    <select name="" id="" class="form-control my-2">
                         <option value="">Select camera</option>
                     </select>
                 </div>
@@ -128,32 +128,15 @@
         const getCameraSelection = async () => {
             const devices = await navigator.mediaDevices.enumerateDevices();
             const videoDevices = devices.filter(device => device.kind === 'videoinput');
+
+            // console.log(videoDevices);
+
             const options = videoDevices.map(videoDevice => {
                 return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
             });
             cameraOptions.innerHTML = options.join('');
         }
         getCameraSelection();
-
-        if ('mediaDevices' in navigator && navigator.mediaDevices.getUserMedia) {
-            const updatedConstraints = {
-                ...constraints,
-                deviceId: {
-                    exact: cameraOptions.value
-                }
-            };
-            playCam();
-        }
-
-        cameraOptions.onchange = () => {
-            const updatedConstraints = {
-                ...constraints,
-                deviceId: {
-                    exact: cameraOptions.value
-                }
-            };
-            playCam();
-        };
 
         
     </script>
