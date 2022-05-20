@@ -13,19 +13,19 @@
 
 <body>
     <div class="container">
-        <div class="row py-4">
+        <div class="row py-3">
             <div class="col-md-12">
                 <h2 class="text-center">Scan QR Code</h2>
             </div>
         </div>
-        <div class="row py-5 mt-5">
-            <div class="col-md-6 text-center">
+        <div class="row py-3">
+            <div class="col-xl-6 text-center">
                 <video id="preview" width="100%" class="border"></video>
                 <p class="text-center" id="nama-camera"></p>
                 <button class="btn btn-success mx-auto" id="play-cam"><i class="ri-play-line"></i></button>
                 <button class="btn btn-danger mx-auto" id="stop-cam" disabled="true"><i class="ri-stop-line"></i></button>
             </div>
-            <div class="col-md-6">
+            <div class="col-xl-6">
                 <div class="form-group">
                     <label for="input">Hasil Scan</label>
                     <input type="text" name="input" id="input" value="" class="form-control">
@@ -37,7 +37,6 @@
                         Your browser does not support the audio element.
                     </audio>
                     <button class="btn btn-outline-light mx-auto my-3 small btn-sm text-muted" onclick="playSound()"><span class="ri-volume-up-line"></span> Tes Suara</button>
-
                 </div>
             </div>
         </div>
@@ -53,7 +52,6 @@
             video: document.getElementById('preview')
         });
 
-
         btn_play.onclick = () => {
             btn_play.setAttribute('disabled', 'true');
             btn_stop.removeAttribute('disabled');
@@ -66,25 +64,20 @@
         }
 
 
-
         function stopCam() {
             let scanner = new Instascan.Scanner({
                 video: document.getElementById('preview')
             });
 
             const mediaStream = cam.srcObject;
-            // Through the MediaStream, you can get the MediaStreamTracks with getTracks():
             const tracks = mediaStream.getTracks();
-            // Tracks are returned as an array, so if you know you only have one, you can stop it with: 
             tracks[0].stop();
-            // Or stop all like so:
             tracks.forEach(track => track.stop());
         }
 
         function playCam() {
 
             if ('mediaDevices' in navigator && 'getUserMedia' in navigator.mediaDevices) {
-
                 // Cek api kamera, jika tersedia maka ditampilkan disini
             }
             // Meminta akses video
