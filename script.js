@@ -1,7 +1,5 @@
 feather.replace();
 
-const audio = document.querySelector('audio#audio');
-const input = document.getElementById('input');
 const controls = document.querySelector('.controls');
 const cameraOptions = document.querySelector('.video-options>select');
 const video = document.querySelector('video');

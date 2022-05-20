@@ -20,16 +20,27 @@
         </div>
         <div class="row py-3">
             <div class="col-xl-6 text-center">
+                <!-- Video / Camera -->
                 <video id="preview" width="100%" class="border"></video>
-                <p class="text-center" id="nama-camera"></p>
+                <!-- End Video / Camera -->
+                
+                <!-- Video Options -->
+                <div class="video-options">
+                    <select name="" id="" class="custom-select">
+                        <option value="">Select camera</option>
+                    </select>
+                </div>
+                <!-- End Video Options -->
+
+                <!-- Button Control -->
                 <button class="btn btn-success mx-auto" id="play-cam"><i class="ri-play-line"></i></button>
                 <button class="btn btn-danger mx-auto" id="stop-cam" disabled="true"><i class="ri-stop-line"></i></button>
+                <!-- End Button Control -->
             </div>
             <div class="col-xl-6">
                 <div class="form-group">
                     <label for="input">Hasil Scan</label>
                     <input type="text" name="input" id="input" value="" class="form-control">
-
                 </div>
                 <div class="sound">
                     <audio control id="audio">
@@ -109,6 +120,29 @@
         function playSound() {
             suara.play();
         }
+
+        const cameraOptions = document.querySelector('.video-options>select');
+        const video = document.querySelector('video');
+
+        const getCameraSelection = async () => {
+            const devices = await navigator.mediaDevices.enumerateDevices();
+            const videoDevices = devices.filter(device => device.kind === 'videoinput');
+            const options = videoDevices.map(videoDevice => {
+                return `<option value="${videoDevice.deviceId}">${videoDevice.label}</option>`;
+            });
+            cameraOptions.innerHTML = options.join('');
+        }
+        getCameraSelection();
+
+        cameraOptions.onchange = () => {
+            const updatedConstraints = {
+                ...constraints,
+                deviceId: {
+                    exact: cameraOptions.value
+                }
+            };
+        startStream(updatedConstraints);
+        };
     </script>
 </body>
 
